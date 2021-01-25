@@ -1,4 +1,5 @@
-import pygame as pg
+# this code is from a tutorial at https://www.youtube.com/watch?v=Pbs6jQZrZA4
+
 import numpy as np
 import time
 import sys

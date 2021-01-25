@@ -1,4 +1,6 @@
-# refactor the fight section to be less repetitive...make function to loop twice through
+# this code is from a tutorial at https://www.youtube.com/watch?v=Pbs6jQZrZA4, making some modifications
+# and using it as a template to develop further functionality
+# refactored the fight section to be less repetitive...made opponent act independently of user
 
 import pygame as pg
 import numpy as np
