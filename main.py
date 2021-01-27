@@ -14,18 +14,29 @@ walkLeft = [pygame.image.load('char/l1.PNG'),
             pygame.image.load('char/l2.png'),
             pygame.image.load('char/l3.png')]
 
-sprite = pygame.image.load('char/stand.PNG')
+walkToward = [pygame.image.load('char/tw1.png'),
+              pygame.image.load('char/tw2.png'),
+              pygame.image.load('char/tw3.png')]
+
+walkAway = [pygame.image.load('char/aw1.png'),
+            pygame.image.load('char/aw2.png'),
+            pygame.image.load('char/aw3.png')]
+
+sprite = pygame.image.load('char/aw1.png')
 
 clock = pygame.time.Clock()
 
+# character movement
 playerX = 390
-playerY = 540
+playerY = 530
 width = 64
 height = 64
 playerX_change = 0
 playerY_change = 0
 left = False
 right = False
+up = False
+down = False
 walkCount = 0
 
 # background
@@ -49,6 +60,12 @@ def redraw_screen(x, y):
     elif right:
         win.blit(walkRight[walkCount//3], (x, y))
         walkCount += 1
+    elif up:
+        win.blit(walkAway[walkCount//3], (x, y))
+        walkCount += 1
+    elif down:
+        win.blit(walkToward[walkCount//3], (x, y))
+        walkCount += 1
     else:
         win.blit(sprite, (playerX, playerY))
     pygame.display.update()
@@ -65,24 +82,30 @@ while running:
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_LEFT] and playerX > 40:
+            playerY_change = 0
             playerX_change = -2
+            print(left, right, up, down)
             left = True
             right = False
             up = False
             down = False
         elif keys[pygame.K_RIGHT] and playerX < 550:
+            playerY_change = 0
             playerX_change = 2
+            print(left, right, up, down)
             right = True
             left = False
             up = False
             down = False
         elif keys[pygame.K_UP] and playerY > 20:
+            playerX_change = 0
             playerY_change = -2
             right = False
             left = False
             up = True
             down = False
         elif keys[pygame.K_DOWN] and playerY > 20:
+            playerX_change = 0
             playerY_change = 2
             right = False
             left = False
