@@ -61,7 +61,7 @@ class Pokemon:
         time.sleep(2)
 
         # considering type advantages
-        def calculate_damage(move, attacked_pokemon):
+        def calculate_damage(attacking_pokemon, move, attacked_pokemon):
 
             version = ["Fire", "Water", "Grass"]
 
@@ -70,7 +70,7 @@ class Pokemon:
 
                     # both types the same
                     if attacked_pokemon.type == k:
-                        attacked_pokemon.defense *= 1.5
+                        attacked_pokemon.defense *= 1.25
                         print("\nIts not very effective...")
 
                     # Poke2 is strong
@@ -84,12 +84,19 @@ class Pokemon:
                         print("\nIt's super effective!")
 
             # determine damage
-            attacked_pokemon.bars -= self.attack
+            attack_damage = attacking_pokemon.attack + move.dmg
+            damage_after_defense = attack_damage/attacked_pokemon.defense
+            attacked_pokemon.bars -= damage_after_defense
             attacked_pokemon.health = ""
 
             # add back bars plus defense boost
-            for j in range(int(attacked_pokemon.bars + 0.1 * attacked_pokemon.defense)):
+            for j in range(int(attacked_pokemon.bars)):
                 attacked_pokemon.health += "="
+
+            time.sleep(1)
+            print(f"\n {self.name}\t\tHEALTH\t{self.bars}")
+            print(f"\n {pokemon2.name}\t\tHEALTH\t{pokemon2.bars}\n")
+            time.sleep(0.5)
 
         # The fighting begins
         # loop to continue while a pokemon still has health
@@ -105,18 +112,14 @@ class Pokemon:
             def attack(pokemon, move, attacked):
                 delay_print(f"{pokemon.name} used {move.name}! \n")
                 time.sleep(1)
-                calculate_damage(move, attacked)
+                calculate_damage(pokemon, move, attacked)
 
             for i, x in enumerate(self.moves):
                 list_attacks(self.moves[i])
 
+            # pick a move and input it to the attack function
             index = int(input("Pick a move."))
             attack(self, self.moves[index - 1], pokemon2)
-
-            time.sleep(1)
-            print(f"\n {self.name}\t\tHEALTH\t{self.bars}")
-            print(f"\n {pokemon2.name}\t\tHEALTH\t{pokemon2.bars}\n")
-            time.sleep(0.5)
 
             # check if pokemon2 has fainted
             if pokemon2.bars <= 0:
@@ -126,11 +129,6 @@ class Pokemon:
             # opposing pokemon chooses attacks at random, micro-AI opponent
             index = random.randint(1, 4)
             attack(pokemon2, pokemon2.moves[index - 1], self)
-
-            time.sleep(1)
-            print(f"\n{pokemon2.name}\t\tHEALTH\t{pokemon2.health}")
-            print(f"\n{self.name}\t\tHEALTH\t{self.health}\n")
-            time.sleep(0.5)
 
             # check if pokemon1 has fainted
             if self.bars <= 0:
