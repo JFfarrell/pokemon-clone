@@ -58,7 +58,6 @@ class Pokemon:
         print("TYPE/", pokemon2.type)
         print("ATTACK/", pokemon2.attack)
         print("DEFENSE/", pokemon2.defense)
-        print("\nVS")
 
         time.sleep(2)
 
