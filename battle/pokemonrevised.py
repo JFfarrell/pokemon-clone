@@ -43,9 +43,11 @@ class Pokemon:
 
     def fight(self, pokemon2):
         # allowing poke1(self) and poke2 to fight
+        print("\n-----POKEMON BATTLE-----")
+        print(f"\nGo, {self.name}!")
+        print(f"\nYour opponent sent out {pokemon2.name}.")
 
         # print fight info
-        print("-----POKEMON BATTLE-----")
         print(f"\n{self.name}")
         print("TYPE/", self.type)
         print("ATTACK/", self.attack)
@@ -94,8 +96,8 @@ class Pokemon:
                 attacked_pokemon.health += "="
 
             time.sleep(1)
-            print(f"\n {self.name}\t\tHEALTH\t{self.bars}")
-            print(f"\n {pokemon2.name}\t\tHEALTH\t{pokemon2.bars}\n")
+            print(f"\n{self.name}\t\tHEALTH\t{self.bars}")
+            print(f"{pokemon2.name}\t\tHEALTH\t{pokemon2.bars}")
             time.sleep(0.5)
 
         # The fighting begins
@@ -104,13 +106,11 @@ class Pokemon:
             print(f"{self.name}\t\tHEALTH\t{self.bars}")
             print(f"{pokemon2.name}\t\tHEALTH\t{pokemon2.bars}\n")
 
-            print(f"\nGo, {self.name}!")
-
             def list_attacks(move):
                 print(move.name)
 
             def attack(pokemon, move, attacked):
-                delay_print(f"{pokemon.name} used {move.name}! \n")
+                delay_print(f"\n{pokemon.name} used {move.name}! \n")
                 time.sleep(1)
                 calculate_damage(pokemon, move, attacked)
 
@@ -124,6 +124,8 @@ class Pokemon:
             # check if pokemon2 has fainted
             if pokemon2.bars <= 0:
                 delay_print("\n..." + pokemon2.name + " fainted.")
+                money = np.random.choice(5000)
+                delay_print(f"\nOpponent paid you ${money}.")
                 break
 
             # opposing pokemon chooses attacks at random, micro-AI opponent
@@ -133,10 +135,8 @@ class Pokemon:
             # check if pokemon1 has fainted
             if self.bars <= 0:
                 delay_print("\n..." + self.name + " fainted.")
+                delay_print("\n Ash whited...")
                 break
-
-        money = np.random.choice(5000)
-        delay_print(f"\nOpponent paid you ${money}.")
 
 
 Ember = Move("Ember", "Fire", 5)
