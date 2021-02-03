@@ -1,30 +1,30 @@
-import pygame
+import pygame as pg
 
-pygame.init()
+pg.init()
 
-win = pygame.display.set_mode((800, 600))
-pygame.display.set_caption("PokeCopy")
+win = pg.display.set_mode((800, 600))
+pg.display.set_caption("PokeCopy")
 
 # char
-walkRight = [pygame.image.load('char/r1.png'),
-             pygame.image.load('char/r2.png'),
-             pygame.image.load('char/r3.png')]
+walkRight = [pg.image.load('char/r1.png'),
+             pg.image.load('char/r2.png'),
+             pg.image.load('char/r3.png')]
 
-walkLeft = [pygame.image.load('char/l1.PNG'),
-            pygame.image.load('char/l2.png'),
-            pygame.image.load('char/l3.png')]
+walkLeft = [pg.image.load('char/l1.PNG'),
+            pg.image.load('char/l2.png'),
+            pg.image.load('char/l3.png')]
 
-walkToward = [pygame.image.load('char/tw1.png'),
-              pygame.image.load('char/tw2.png'),
-              pygame.image.load('char/tw3.png')]
+walkToward = [pg.image.load('char/tw1.png'),
+              pg.image.load('char/tw2.png'),
+              pg.image.load('char/tw3.png')]
 
-walkAway = [pygame.image.load('char/aw1.png'),
-            pygame.image.load('char/aw2.png'),
-            pygame.image.load('char/aw3.png')]
+walkAway = [pg.image.load('char/aw1.png'),
+            pg.image.load('char/aw2.png'),
+            pg.image.load('char/aw3.png')]
 
-sprite = pygame.image.load('char/aw1.png')
+sprite = pg.image.load('char/aw1.png')
 
-clock = pygame.time.Clock()
+clock = pg.time.Clock()
 
 # character movement
 playerX = 390
@@ -40,8 +40,8 @@ down = False
 walkCount = 0
 
 # background
-ceruleanSmall = pygame.image.load("otherImages/cerulean.png")
-cerulean = pygame.transform.scale(ceruleanSmall, (1062, 938))
+ceruleanSmall = pg.image.load("otherImages/cerulean.png")
+cerulean = pg.transform.scale(ceruleanSmall, (1062, 938))
 ceruleanX = 0
 ceruleanY = 0
 ceruleanX_change = 0
@@ -68,20 +68,20 @@ def redraw_screen(x, y):
         walkCount += 1
     else:
         win.blit(sprite, (playerX, playerY))
-    pygame.display.update()
+    pg.display.update()
 
 
 running = True
 while running:
     clock.tick(27)
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
             running = False
 
-        keys = pygame.key.get_pressed()
+        keys = pg.key.get_pressed()
 
-        if keys[pygame.K_LEFT] and playerX > 40:
+        if keys[pg.K_LEFT] and playerX > 40:
             playerY_change = 0
             playerX_change = -2
             print(left, right, up, down)
@@ -89,7 +89,7 @@ while running:
             right = False
             up = False
             down = False
-        elif keys[pygame.K_RIGHT] and playerX < 550:
+        elif keys[pg.K_RIGHT] and playerX < 550:
             playerY_change = 0
             playerX_change = 2
             print(left, right, up, down)
@@ -97,14 +97,14 @@ while running:
             left = False
             up = False
             down = False
-        elif keys[pygame.K_UP] and playerY > 20:
+        elif keys[pg.K_UP] and playerY > 20:
             playerX_change = 0
             playerY_change = -2
             right = False
             left = False
             up = True
             down = False
-        elif keys[pygame.K_DOWN] and playerY > 20:
+        elif keys[pg.K_DOWN] and playerY > 20:
             playerX_change = 0
             playerY_change = 2
             right = False
@@ -112,7 +112,7 @@ while running:
             up = False
             down = True
 
-        if event.type == pygame.KEYUP:
+        if event.type == pg.KEYUP:
             playerX_change = 0
             playerY_change = 0
             right = False

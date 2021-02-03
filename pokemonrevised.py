@@ -9,9 +9,26 @@ import time
 import sys
 import random
 
+pg.init()
+
+#win = pg.display.set_mode((800, 600))
+#pg.display.set_caption("PokeCopy")
+
+# set sprites and their coordinates
+charmander_sprite = pg.image.load("otherImages/charmander.png")
+squirtle_sprite = pg.image.load("otherImages/squirtle.png")
+
+sprite_width = 64
+sprite_height = 64
+
+user_pokemonX = 200
+user_pokemonY = 500
+
+opponent_pokemonX = 400
+opponent_pokemonY = 200
+
+
 # Delay printing
-
-
 def delay_print(s):
     # print one character at a time
     # https://stackoverflow.com/questions/9246076/how-to-print-one-character-at-a-time-on-one-line
@@ -61,6 +78,11 @@ class Pokemon:
 
         time.sleep(2)
 
+        def attack(pokemon, move, attacked):
+            delay_print(f"\n{pokemon.name} used {move.name}! \n")
+            time.sleep(1)
+            calculate_damage(pokemon, move, attacked)
+
         # considering type advantages
         def calculate_damage(attacking_pokemon, move, attacked_pokemon):
 
@@ -105,16 +127,10 @@ class Pokemon:
             print(f"{self.name}\t\tHEALTH\t{self.bars}")
             print(f"{pokemon2.name}\t\tHEALTH\t{pokemon2.bars}\n")
 
-            def list_attacks(move):
-                print(move.name)
-
-            def attack(pokemon, move, attacked):
-                delay_print(f"\n{pokemon.name} used {move.name}! \n")
-                time.sleep(1)
-                calculate_damage(pokemon, move, attacked)
-
+            # print the attacks available to your pokemon
             for i, x in enumerate(self.moves):
-                list_attacks(self.moves[i])
+                move = self.moves[i]
+                print(move.name)
 
             # pick a move and input it to the attack function
             index = int(input("Pick a move."))
