@@ -133,7 +133,7 @@ class Pokemon:
                 print(move.name)
 
             # pick a move and input it to the attack function
-            index = int(input("Pick a move."))
+            index = int(input("Pick a move. "))
             attack(self, self.moves[index - 1], pokemon2)
 
             # check if pokemon2 has fainted
