@@ -9,6 +9,8 @@ import time
 import sys
 import random
 
+# test
+
 pg.init()
 
 #win = pg.display.set_mode((800, 600))
