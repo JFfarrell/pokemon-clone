@@ -56,7 +56,8 @@ class Pokemon:
         self.attack = EVs['ATTACK']
         self.defense = EVs['DEFENSE']
         self.health = health
-        self.bars = 20 # health bars
+        # health bars
+        self.bars = 20
 
     def fight(self, pokemon2):
         # allowing poke1(self) and poke2 to fight
@@ -65,15 +66,13 @@ class Pokemon:
         print(f"\nYour opponent sent out {pokemon2.name}.")
 
         # print fight info
-        print(f"\n{self.name}")
-        print("|----------|")
+        print(f"\n---{self.name}---\n")
         print("TYPE/", self.type)
         print("ATTACK/", self.attack)
         print("DEFENSE/", self.defense)
         print("\nVS")
 
-        print(f"\n{pokemon2.name}")
-        print("|----------|")
+        print(f"\n---{pokemon2.name}---\n")
         print("TYPE/", pokemon2.type)
         print("ATTACK/", pokemon2.attack)
         print("DEFENSE/", pokemon2.defense, "\n")
