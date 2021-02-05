@@ -66,20 +66,22 @@ class Pokemon:
 
         # print fight info
         print(f"\n{self.name}")
+        print("|----------|")
         print("TYPE/", self.type)
         print("ATTACK/", self.attack)
         print("DEFENSE/", self.defense)
         print("\nVS")
 
         print(f"\n{pokemon2.name}")
+        print("|----------|")
         print("TYPE/", pokemon2.type)
         print("ATTACK/", pokemon2.attack)
-        print("DEFENSE/", pokemon2.defense)
+        print("DEFENSE/", pokemon2.defense, "\n")
 
         time.sleep(2)
 
         def attack(pokemon, move, attacked):
-            delay_print(f"\n{pokemon.name} used {move.name}! \n")
+            delay_print(f"{pokemon.name} used {move.name}! \n\n")
             time.sleep(1)
             calculate_damage(pokemon, move, attacked)
 
@@ -117,9 +119,6 @@ class Pokemon:
                 attacked_pokemon.health += "="
 
             time.sleep(1)
-            print(f"\n{self.name}\t\tHEALTH\t{self.bars}")
-            print(f"{pokemon2.name}\t\tHEALTH\t{pokemon2.bars}")
-            time.sleep(0.5)
 
         # The fighting begins
         # loop to continue while a pokemon still has health
@@ -130,10 +129,11 @@ class Pokemon:
             # print the attacks available to your pokemon
             for i, x in enumerate(self.moves):
                 move = self.moves[i]
-                print(move.name)
+                print(f"{i+1}. {move.name}")
 
             # pick a move and input it to the attack function
             index = int(input("Pick a move. "))
+            print("\n")
             attack(self, self.moves[index - 1], pokemon2)
 
             # check if pokemon2 has fainted
