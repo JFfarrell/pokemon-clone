@@ -20,6 +20,10 @@ attack_time = 0
 mixer.music.load("Battle!.mp3")
 mixer.music.play(-1)
 
+# background image
+battleImage = pg.image.load("otherImages/battlebg.png")
+battleBG = pg.transform.scale(battleImage, (800, 600))
+
 # set sprites and their coordinates
 original_charmander = pg.image.load("otherImages/charmander.png")
 original_squirtle = pg.image.load("otherImages/squirtle.png")
@@ -30,8 +34,8 @@ squirtle_sprite = pg.transform.scale(original_squirtle, (260, 260))
 user_pokemonX = 0
 user_pokemonY = 350
 
-opponent_pokemonX = 500
-opponent_pokemonY = 0
+opponent_pokemonX = 480
+opponent_pokemonY = 90
 
 screen_color = (255, 255, 255)
 
@@ -60,7 +64,7 @@ def redraw_screen(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
                 pg.time.delay(200)
         attacked = False
 
-    win.fill(screen_color)
+    win.blit(battleBG, (0, 0))
     win.blit(user_pokemon_sprite, (x1, y1))
     win.blit(opponent_pokemon_sprite, (x2, y2))
     pg.display.update()
@@ -68,7 +72,7 @@ def redraw_screen(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
 
 def reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
     print(x1)
-    win.fill(screen_color)
+    win.blit(battleBG, (0, 0))
     win.blit(user_pokemon_sprite, (x1, y1))
     win.blit(opponent_pokemon_sprite, (x2, y2))
     pg.display.update()
