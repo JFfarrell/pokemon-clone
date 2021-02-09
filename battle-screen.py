@@ -15,31 +15,49 @@ current_time = 0
 attack_time = 0
 
 # set sprites and their coordinates
-charmander_sprite = pg.image.load("otherImages/charmander.png")
-squirtle_sprite = pg.image.load("otherImages/squirtle.png")
+original_charmander = pg.image.load("otherImages/charmander.png")
+original_squirtle = pg.image.load("otherImages/squirtle.png")
 
-sprite_width = 64
-sprite_height = 64
+charmander_sprite = pg.transform.scale(original_charmander, (280, 280))
+squirtle_sprite = pg.transform.scale(original_squirtle, (280, 280))
 
-user_pokemonX = 200
-user_pokemonY = 500
+user_pokemonX = 0
+user_pokemonY = 350
 
-opponent_pokemonX = 400
-opponent_pokemonY = 200
+opponent_pokemonX = 500
+opponent_pokemonY = 0
 
 screen_color = (255, 255, 255)
 
 attack = False
+attacked = False
 
 
 def redraw_screen(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
-    global attack_time
-    if attack_time > 500:
-        reframe(user_pokemon_sprite, opponent_pokemon_sprite, 250, y1, x2, y2)
-        pg.time.wait(1000)
-        attack_time = 0
+    # some animation if an attack happens
+    global attack
+    global attacked
+    while attack:
+        reframe(user_pokemon_sprite, opponent_pokemon_sprite, 100, y1, x2, y2)
+        pg.time.delay(500)
+        attack = False
+        reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2)
+        pg.time.delay(600)
+        attacked = True
+    while attacked:
+        for x in range(4):
+            if x % 2 == 0:
+                reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, 4000, y2)
+                pg.time.delay(400)
+            else:
+                reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2)
+                pg.time.delay(400)
+        attacked = False
 
-    reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2)
+    win.fill(screen_color)
+    win.blit(user_pokemon_sprite, (x1, y1))
+    win.blit(opponent_pokemon_sprite, (x2, y2))
+    pg.display.update()
 
 
 def reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
@@ -48,7 +66,6 @@ def reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
     win.blit(user_pokemon_sprite, (x1, y1))
     win.blit(opponent_pokemon_sprite, (x2, y2))
     pg.display.update()
-
 
 
 running = True
@@ -63,7 +80,6 @@ while running:
     action = keys[pg.K_LEFT]
 
     if action:
-        attack_time = pg.time.get_ticks()
         attack = True
 
     redraw_screen(charmander_sprite, squirtle_sprite, user_pokemonX, user_pokemonY, opponent_pokemonX, opponent_pokemonY)
