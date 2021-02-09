@@ -1,10 +1,12 @@
 import pygame as pg
+from pygame import mixer
 import numpy as np
 import time
 import sys
 import random
 
 pg.init()
+pg.mixer.init()
 
 win = pg.display.set_mode((800, 600))
 pg.display.set_caption("PokeCopy")
@@ -14,12 +16,16 @@ clock = pg.time.Clock()
 current_time = 0
 attack_time = 0
 
+# background sound
+mixer.music.load("Battle!.mp3")
+mixer.music.play(-1)
+
 # set sprites and their coordinates
 original_charmander = pg.image.load("otherImages/charmander.png")
 original_squirtle = pg.image.load("otherImages/squirtle.png")
 
-charmander_sprite = pg.transform.scale(original_charmander, (280, 280))
-squirtle_sprite = pg.transform.scale(original_squirtle, (280, 280))
+charmander_sprite = pg.transform.scale(original_charmander, (260, 260))
+squirtle_sprite = pg.transform.scale(original_squirtle, (260, 260))
 
 user_pokemonX = 0
 user_pokemonY = 350
@@ -48,10 +54,10 @@ def redraw_screen(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
         for x in range(4):
             if x % 2 == 0:
                 reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, 4000, y2)
-                pg.time.delay(400)
+                pg.time.delay(200)
             else:
                 reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2)
-                pg.time.delay(400)
+                pg.time.delay(200)
         attacked = False
 
     win.fill(screen_color)
