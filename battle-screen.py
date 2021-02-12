@@ -5,6 +5,7 @@ import time
 import sys
 import random
 
+
 pg.init()
 pg.mixer.init()
 
@@ -17,7 +18,7 @@ current_time = 0
 attack_time = 0
 
 # background sound
-mixer.music.load("Battle!.mp3")
+mixer.music.load("audio/Battle!.mp3")
 mixer.music.play(-1)
 
 # background image
@@ -35,9 +36,15 @@ user_pokemonX = 0
 user_pokemonY = 350
 
 opponent_pokemonX = 480
-opponent_pokemonY = 90
+opponent_pokemonY = 130
 
+#
+health_color = (0, 255, 0)
 screen_color = (255, 255, 255)
+
+#
+user_health = pg.draw.line(battleBG, health_color, (250, 425), (500, 425), width=6)
+opponent_health = pg.draw.line(battleBG, health_color, (250, 175), (500, 175), width=6)
 
 attack = False
 attacked = False
@@ -73,6 +80,7 @@ def redraw_screen(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
 def reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
     print(x1)
     win.blit(battleBG, (0, 0))
+    #win.blit(health_bar, (550, 50))
     win.blit(user_pokemon_sprite, (x1, y1))
     win.blit(opponent_pokemon_sprite, (x2, y2))
     pg.display.update()
