@@ -11,22 +11,6 @@ import random
 
 pg.init()
 
-#win = pg.display.set_mode((800, 600))
-#pg.display.set_caption("PokeCopy")
-
-# set sprites and their coordinates
-charmander_sprite = pg.image.load("otherImages/charmander.png")
-squirtle_sprite = pg.image.load("otherImages/squirtle.png")
-
-sprite_width = 64
-sprite_height = 64
-
-user_pokemonX = 200
-user_pokemonY = 500
-
-opponent_pokemonX = 400
-opponent_pokemonY = 200
-
 
 # Delay printing
 def delay_print(s):
@@ -48,9 +32,10 @@ class Move:
 
 # create the class
 class Pokemon:
-    def __init__(self, name, type, moves, EVs, health="================"):
+    def __init__(self, name, sprite, type, moves, EVs, health="================"):
         # save variables as attributes
         self.name = name
+        self.sprite = sprite
         self.type = type
         self.moves = moves
         self.attack = EVs['ATTACK']
