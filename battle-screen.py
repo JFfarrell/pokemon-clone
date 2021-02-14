@@ -10,14 +10,8 @@ pg.mixer.init()
 win = pg.display.set_mode((800, 600))
 pg.display.set_caption("PokeCopy")
 
-# timer
-clock = pg.time.Clock()
-current_time = 0
-attack_time = 0
-
 # background sound
 mixer.music.load("audio/Battle!.mp3")
-
 
 # background image
 battleImage = pg.image.load("otherImages/battlebg.png")
@@ -58,12 +52,24 @@ opponent_health = pg.draw.line(battleBG, health_color, (250, 175), (500, 175), w
 
 # menus and cursors
 menu_og = pg.image.load("otherImages/menubox.PNG")
-cursor_og = pg.image.load("otherImages/cursor.png")
+cursor = pg.image.load("otherImages/cursor.png")
 myBar_og = pg.image.load("otherImages/myBar.png")
 oppBar = pg.image.load("otherImages/oppbar.png")
+select_og = pg.image.load("otherImages/select.PNG")
 
 menu = pg.transform.scale(menu_og, (450, 120))
 myBar = pg.transform.scale(myBar_og, (400, 150))
+select = pg.transform.scale(select_og, (250, 300))
+
+# menu positions
+select_positionX = 200
+select_positionY = 200
+
+cursor_positionX = 80
+cursor_positionY = 200
+
+# choose your pokemon
+choice = 0
 
 attack = False
 attacked = False
@@ -99,6 +105,13 @@ def reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
     win.blit(opponent_pokemon_sprite, (x2, y2))
     win.blit(menu, (0, 480))
     win.blit(myBar, (400, 348))
+    pg.display.update()
+
+
+def choice_refresh():
+    win.blit(battleBG, (0, 0))
+    win.blit(menu, (select_positionX, select_positionY))
+    win.blit(cursor, (cursor_positionX, cursor_positionY))
     pg.display.update()
 
 
@@ -158,24 +171,42 @@ if __name__ == '__main__':
 
     pokedex = [charmander, squirtle, bulbasaur]
 
-    iChooseYou = int(input("Choose your pokemon (1 = Charmander, 2 = Squirtle, 3 = Bulbasaur: "))
-    if iChooseYou <= len(pokedex):
-        user = pokedex[iChooseYou - 1]
-        random = random.randint(0, 2)
-        opponent = pokedex[random]
+    choose = True
+    while choose:
+        screen_color = (0, 255, 0)
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                choose = False
+
+            keys = pg.key.get_pressed()
+            up = keys[pg.K_UP]
+            down = keys[pg.K_DOWN]
+            select = keys[pg.K_a]
+
+            if up and cursor_positionY > 200:
+                cursor_positionY -= 70
+                choice -= 1
+            if down and cursor_positionY < 281:
+                cursor_positionY += 70
+                choice += 1
+            if select:
+                user = pokedex[choice]
+                oppChoice = random.randint(0, 2)
+                opponent = pokedex[oppChoice]
+                choose = False
+
+        choice_refresh()
 
     mixer.music.play(-1)
     running = True
-
     while running:
-
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 running = False
 
         keys = pg.key.get_pressed()
 
-        action = keys[pg.K_LEFT]
+        action = keys[pg.K_SPACE]
 
         if action:
             attack = True
