@@ -56,6 +56,7 @@ cursor = pg.image.load("otherImages/cursor.png")
 myBar_og = pg.image.load("otherImages/myBar.png")
 oppBar = pg.image.load("otherImages/oppbar.png")
 select_og = pg.image.load("otherImages/select.PNG")
+select_menu = pg.image.load("otherImages/demomenu.png")
 
 menu = pg.transform.scale(menu_og, (450, 120))
 myBar = pg.transform.scale(myBar_og, (400, 150))
@@ -110,7 +111,7 @@ def reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
 
 def choice_refresh():
     win.blit(battleBG, (0, 0))
-    win.blit(menu, (select_positionX, select_positionY))
+    win.blit(select_menu, (select_positionX, select_positionY))
     win.blit(cursor, (cursor_positionX, cursor_positionY))
     pg.display.update()
 

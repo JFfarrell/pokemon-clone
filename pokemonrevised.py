@@ -4,7 +4,7 @@
 # test line
 
 import pygame as pg
-import numpy as np
+#import numpy as np
 import time
 import sys
 import random
@@ -32,10 +32,10 @@ class Move:
 
 # create the class
 class Pokemon:
-    def __init__(self, name, sprite, type, moves, EVs, health="================"):
+    def __init__(self, name, type, moves, EVs, health="================"):
         # save variables as attributes
         self.name = name
-        self.sprite = sprite
+        #self.sprite = sprite
         self.type = type
         self.moves = moves
         self.attack = EVs['ATTACK']
