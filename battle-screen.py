@@ -69,6 +69,12 @@ select_positionY = 200
 cursor_positionX = 80
 cursor_positionY = 200
 
+battle_menu_cursorX = -120
+battle_menu_cursorY = 440
+
+# choose your menu action
+action_choice = 1
+
 # choose your pokemon
 choice = 0
 
@@ -106,6 +112,7 @@ def reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
     win.blit(opponent_pokemon_sprite, (x2, y2))
     win.blit(menu, (0, 480))
     win.blit(myBar, (400, 348))
+    win.blit(cursor, (battle_menu_cursorX, battle_menu_cursorY))
     pg.display.update()
 
 
@@ -198,7 +205,7 @@ if __name__ == '__main__':
 
         choice_refresh()
 
-    mixer.music.play(-1)
+    #mixer.music.play(-1)
     running = True
     while running:
         for event in pg.event.get():
@@ -208,7 +215,30 @@ if __name__ == '__main__':
         keys = pg.key.get_pressed()
 
         action = keys[pg.K_SPACE]
+        right = keys[pg.K_RIGHT]
+        left = keys[pg.K_LEFT]
+        up = keys[pg.K_UP]
+        down = keys[pg.K_DOWN]
 
+        if right and battle_menu_cursorX < 80:
+            battle_menu_cursorX += 50
+            action_choice += 1
+            print(action_choice)
+
+        if left and battle_menu_cursorX > -120:
+            battle_menu_cursorX -= 50
+            action_choice -= 1
+            print(action_choice)
+
+        if up and battle_menu_cursorY > 440:
+            battle_menu_cursorY -= 50
+            action_choice -= 2
+            print(action_choice)
+
+        if down and battle_menu_cursorY < 480:
+            battle_menu_cursorY += 50
+            action_choice += 2
+            print(action_choice)
         if action:
             attack = True
 

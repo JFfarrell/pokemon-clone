@@ -84,7 +84,7 @@ while running:
         if keys[pg.K_LEFT] and playerX > 40:
             playerY_change = 0
             playerX_change = -2
-            print(left, right, up, down)
+
             left = True
             right = False
             up = False
