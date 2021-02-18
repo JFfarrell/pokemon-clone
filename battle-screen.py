@@ -212,35 +212,21 @@ if __name__ == '__main__':
             if event.type == pg.QUIT:
                 running = False
 
-        keys = pg.key.get_pressed()
-
-        action = keys[pg.K_SPACE]
-        right = keys[pg.K_RIGHT]
-        left = keys[pg.K_LEFT]
-        up = keys[pg.K_UP]
-        down = keys[pg.K_DOWN]
-
-        if right and battle_menu_cursorX < 80:
-            battle_menu_cursorX += 50
-            action_choice += 1
-            print(action_choice)
-
-        if left and battle_menu_cursorX > -120:
-            battle_menu_cursorX -= 50
-            action_choice -= 1
-            print(action_choice)
-
-        if up and battle_menu_cursorY > 440:
-            battle_menu_cursorY -= 50
-            action_choice -= 2
-            print(action_choice)
-
-        if down and battle_menu_cursorY < 480:
-            battle_menu_cursorY += 50
-            action_choice += 2
-            print(action_choice)
-        if action:
-            attack = True
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_SPACE:
+                    attack = True
+                if event.key == pg.K_RIGHT and battle_menu_cursorX < 80:
+                    battle_menu_cursorX += 180
+                    action_choice += 1
+                if event.key == pg.K_LEFT and battle_menu_cursorX > -120:
+                    battle_menu_cursorX -= 180
+                    action_choice -= 1
+                if event.key == pg.K_UP and battle_menu_cursorY > 440:
+                    battle_menu_cursorY -= 50
+                    action_choice -= 2
+                if event.key == pg.K_DOWN and battle_menu_cursorY < 480:
+                    battle_menu_cursorY += 50
+                    action_choice += 2
 
         redraw_screen(user.sprite, opponent.oppSprite,
                       user_pokemonX, user_pokemonY,
