@@ -72,6 +72,9 @@ cursor_positionY = 200
 battle_menu_cursorX = -120
 battle_menu_cursorY = 440
 
+# font
+font = pg.font.SysFont('freesansbold.tff', 40)
+
 # choose your menu action
 action_choice = 1
 
@@ -113,6 +116,10 @@ def reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
     win.blit(menu, (0, 480))
     win.blit(myBar, (400, 348))
     win.blit(cursor, (battle_menu_cursorX, battle_menu_cursorY))
+    win.blit(user_atk1, (80, 500))
+    win.blit(user_atk2, (260, 500))
+    win.blit(user_atk3, (80, 550))
+    win.blit(user_atk4, (260, 550))
     pg.display.update()
 
 
@@ -201,6 +208,12 @@ if __name__ == '__main__':
                 user = pokedex[choice]
                 oppChoice = random.randint(0, 2)
                 opponent = pokedex[oppChoice]
+                attack1, attack2, attack3, attack4 = user.moves[0], user.moves[1], user.moves[2], user.moves[3]
+                user_atk1 = font.render(attack1.name, True, (255, 255, 255))
+                user_atk2 = font.render(attack2.name, True, (255, 255, 255))
+                user_atk3 = font.render(attack3.name, True, (255, 255, 255))
+                user_atk4 = font.render(attack4.name, True, (255, 255, 255))
+
                 choose = False
 
         choice_refresh()
