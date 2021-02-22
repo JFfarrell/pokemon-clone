@@ -3,6 +3,7 @@ from pygame import mixer
 import time
 import sys
 import random
+import classes
 
 pg.init()
 pg.mixer.init()
@@ -115,11 +116,14 @@ def reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
     win.blit(opponent_pokemon_sprite, (x2, y2))
     win.blit(menu, (0, 480))
     win.blit(myBar, (400, 348))
+    win.blit(oppBar, (180, 140))
     win.blit(cursor, (battle_menu_cursorX, battle_menu_cursorY))
     win.blit(user_atk1, (80, 500))
     win.blit(user_atk2, (260, 500))
     win.blit(user_atk3, (80, 550))
     win.blit(user_atk4, (260, 550))
+    win.blit(user_name, (475, 382))
+    win.blit(opp_name, (225, 185))
     pg.display.update()
 
 
@@ -140,49 +144,25 @@ def delay_print(s):
         time.sleep(0.05)
 
 
-# a move class, so combat can be calculated by move type/attributes
-class Move:
-    def __init__(self, name, type, dmg):
-        self.name = name
-        self.type = type
-        self.dmg = dmg
-
-
-# create the class
-class Pokemon:
-    def __init__(self, name, sprite, oppSprite, type, moves, EVs, health="================"):
-        # save variables as attributes
-        self.name = name
-        self.sprite = sprite
-        self.oppSprite = oppSprite
-        self.type = type
-        self.moves = moves
-        self.attack = EVs['ATTACK']
-        self.defense = EVs['DEFENSE']
-        self.health = health
-        # health bars
-        self.bars = 20
-
-
-Ember = Move("Ember", "Fire", 5)
-Tackle = Move("Tackle", "Normal", 2)
-Bite = Move("Bite", "Normal", 3)
-Scratch = Move("Scratch", "Normal", 2)
-Bubble = Move("Bubble", "Water", 4)
-WaterGun = Move("Water Gun", "Water", 3)
-IvyWhip = Move("Ivy Whip", "Grass", 4)
+Ember = classes.Move("Ember", "Fire", 5)
+Tackle = classes.Move("Tackle", "Normal", 2)
+Bite = classes.Move("Bite", "Normal", 3)
+Scratch = classes.Move("Scratch", "Normal", 2)
+Bubble = classes.Move("Bubble", "Water", 4)
+WaterGun = classes.Move("Water Gun", "Water", 3)
+IvyWhip = classes.Move("Ivy Whip", "Grass", 4)
 
 if __name__ == '__main__':
     # create pokemon object
-    charmander = Pokemon("Charmander", charmander_sprite, charmander_opp, "Fire",
-                         [Ember, Tackle, Bite, Scratch],
-                         {"ATTACK": 4, "DEFENSE": 2})
-    squirtle = Pokemon("Squirtle", squirtle_sprite, squirtle_opp, "Water",
-                         [Bubble, Scratch, Tackle, Bite],
-                         {"ATTACK": 3, "DEFENSE": 3})
-    bulbasaur = Pokemon("Bulbasaur", bulbasaur_sprite, bulbasaur_opp, "Grass",
-                         [IvyWhip, Scratch, Tackle, Bite],
-                         {"ATTACK": 2, "DEFENSE": 5})
+    charmander = classes.Pokemon("Charmander", charmander_sprite, charmander_opp, "Fire",
+                                 [Ember, Tackle, Bite, Scratch],
+                                 {"ATTACK": 4, "DEFENSE": 2})
+    squirtle = classes.Pokemon("Squirtle", squirtle_sprite, squirtle_opp, "Water",
+                               [Bubble, Scratch, Tackle, Bite],
+                               {"ATTACK": 3, "DEFENSE": 3})
+    bulbasaur = classes.Pokemon("Bulbasaur", bulbasaur_sprite, bulbasaur_opp, "Grass",
+                                [IvyWhip, Scratch, Tackle, Bite],
+                                {"ATTACK": 2, "DEFENSE": 5})
 
     pokedex = [charmander, squirtle, bulbasaur]
 
@@ -213,6 +193,8 @@ if __name__ == '__main__':
                 user_atk2 = font.render(attack2.name, True, (255, 255, 255))
                 user_atk3 = font.render(attack3.name, True, (255, 255, 255))
                 user_atk4 = font.render(attack4.name, True, (255, 255, 255))
+                user_name = font.render(user.name, True, (0, 0, 0))
+                opp_name = font.render(opponent.name, True, (0, 0, 0))
 
                 choose = False
 
