@@ -86,17 +86,64 @@ attack = False
 attacked = False
 
 
+def pokeAttack(attacker, attacked, move):
+    print("Attacked pokemon is: ", attacked.name)
+    delay_print(f"{attacker.name} used {move.name}! \n\n")
+    calculate_damage(move, attacked)
+
+    # determine damage
+    attack_damage = attacker.attack + move.dmg
+    damage_after_defense = attack_damage / attacked.defense
+    attacked.bars -= damage_after_defense
+    attacked.health = ""
+
+    # add back bars plus defense boost
+    for j in range(int(attacked.bars)):
+        attacked.health += "="
+
+    print(len(attacked.health))
+    time.sleep(1)
+
+
+# considering type advantages
+def calculate_damage(move, attacked_pokemon):
+
+    version = ["Fire", "Water", "Grass"]
+
+    for i, k in enumerate(version):
+        if move.type == k:
+
+            # both types the same
+            if attacked_pokemon.type == k:
+                attacked_pokemon.defense *= 1.25
+                print("\nIts not very effective...")
+
+            # Poke2 is strong
+            if attacked_pokemon.type == version[(i+1) % 3]:
+                attacked_pokemon.defense *= 1.5
+                print("\nIt's not very effective...")
+
+            # attack is super effective
+            if attacked_pokemon.type == version[(i+2) % 3]:
+                attacked_pokemon.defense *= 0.75
+                print("\nIt's super effective!")
+
+
 def redraw_screen(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
     # some animation if an attack happens
     global attack
     global attacked
     while attack:
+        # send attack information
+        pokeAttack(user, opponent, user.moves[action_choice - 1])
+
         reframe(user_pokemon_sprite, opponent_pokemon_sprite, 100, y1, x2, y2)
         pg.time.delay(500)
         attack = False
         reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2)
-        pg.time.delay(600)
+        pg.time.delay(500)
         attacked = True
+
     while attacked:
         for x in range(4):
             if x % 2 == 0:
@@ -105,9 +152,44 @@ def redraw_screen(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
             else:
                 reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2)
                 pg.time.delay(200)
+
+        opp_attack(opponent_pokemon_sprite, user_pokemon_sprite, x1, y1, x2, y2)
         attacked = False
 
     reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2)
+
+
+def opp_attack(attacked_poke, attacker_poke, x1, y1, x2, y2):
+    # some animation if an attack happens
+    opponents_attack = random.randint(0, 3)
+    time.sleep(2)
+
+    attack = True
+    attacked = True
+
+    while attack:
+        # send attack information
+        pokeAttack(opponent, user, opponent.moves[opponents_attack])
+
+        reframe(attacker_poke, attacked_poke, x1, y1, x2 - 80, y2)
+        pg.time.delay(500)
+        attack = False
+        reframe(attacker_poke, attacked_poke, x1, y1, x2, y2)
+        pg.time.delay(500)
+        attacked = True
+
+    while attacked:
+        for x in range(4):
+            if x % 2 == 0:
+                reframe(attacker_poke, attacked_poke, 4000, y1, x2, y2)
+                pg.time.delay(200)
+            else:
+                reframe(attacker_poke, attacked_poke, x1, y1, x2, y2)
+                pg.time.delay(200)
+
+        attacked = False
+
+    reframe(attacker_poke, attacked_poke, x2, y2, x1, y1)
 
 
 def reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
@@ -226,5 +308,6 @@ if __name__ == '__main__':
         redraw_screen(user.sprite, opponent.oppSprite,
                       user_pokemonX, user_pokemonY,
                       opponent_pokemonX, opponent_pokemonY)
+
 
 
