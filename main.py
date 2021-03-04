@@ -71,7 +71,7 @@ def redraw_screen(x, y):
     pg.display.update()
 
 
-running = True
+running = False
 while running:
     clock.tick(27)
 

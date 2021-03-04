@@ -84,15 +84,19 @@ choice = 0
 
 attack = False
 attacked = False
+over = False
+gameOver = False
 
 
 def pokeAttack(attacker, attacked, move):
-    print("Attacked pokemon is: ", attacked.name)
+    global running
+    global gameOver
+
     delay_print(f"{attacker.name} used {move.name}! \n\n")
-    calculate_damage(move, attacked)
+    defense = calculate_damage(move, attacked)
 
     # determine damage
-    attack_damage = attacker.attack + move.dmg
+    attack_damage = defense * (attacker.attack + move.dmg)
     damage_after_defense = attack_damage / attacked.defense
     attacked.bars -= damage_after_defense
     attacked.health = ""
@@ -101,7 +105,8 @@ def pokeAttack(attacker, attacked, move):
     for j in range(int(attacked.bars)):
         attacked.health += "="
 
-    print(len(attacked.health))
+    poke_health = len(attacked.health)
+    print(poke_health)
     time.sleep(1)
 
 
@@ -109,29 +114,34 @@ def pokeAttack(attacker, attacked, move):
 def calculate_damage(move, attacked_pokemon):
 
     version = ["Fire", "Water", "Grass"]
+    if version.__contains__(move.type):
+        for i, k in enumerate(version):
+            if move.type == k:
+                print(move.type)
 
-    for i, k in enumerate(version):
-        if move.type == k:
+                # both types the same
+                if attacked_pokemon.type == k:
+                    print("\nIts not very effective...")
+                    return 0.85
 
-            # both types the same
-            if attacked_pokemon.type == k:
-                attacked_pokemon.defense *= 1.25
-                print("\nIts not very effective...")
+                # attacked pokemon is strong
+                if attacked_pokemon.type == version[(i+1) % 3]:
+                    print("\nIt's not very effective...")
+                    return 0.75
 
-            # Poke2 is strong
-            if attacked_pokemon.type == version[(i+1) % 3]:
-                attacked_pokemon.defense *= 1.5
-                print("\nIt's not very effective...")
-
-            # attack is super effective
-            if attacked_pokemon.type == version[(i+2) % 3]:
-                attacked_pokemon.defense *= 0.75
-                print("\nIt's super effective!")
+                # attack is strong against attacked pokemon
+                if attacked_pokemon.type == version[(i+2) % 3]:
+                    print("\nIt's super effective!")
+                    return 1.25
+    else:
+        return 1
 
 
 def redraw_screen(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
     # some animation if an attack happens
     global attack
+    global running
+    global gameOver
     global attacked
     while attack:
         # send attack information
@@ -139,10 +149,15 @@ def redraw_screen(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
 
         reframe(user_pokemon_sprite, opponent_pokemon_sprite, 100, y1, x2, y2)
         pg.time.delay(500)
-        attack = False
         reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2)
-        pg.time.delay(500)
-        attacked = True
+        attack = False
+
+        if len(opponent.health) > 0:
+            attacked = True
+        else:
+            time.sleep(3)
+            running = False
+            gameOver = True
 
     while attacked:
         for x in range(4):
@@ -309,5 +324,18 @@ if __name__ == '__main__':
                       user_pokemonX, user_pokemonY,
                       opponent_pokemonX, opponent_pokemonY)
 
+    while gameOver:
+        if len(opponent.health) == 0:
+            opponent_pokemonY += 10
+            if opponent_pokemonY > 180:
+                opponent_pokemonY = 800
 
+        if len(user.health) == 0:
+            user_pokemonY += 10
+            if user_pokemonY > 350:
+                user_pokemonY = 800
+
+        redraw_screen(user.sprite, opponent.oppSprite,
+                      user_pokemonX, user_pokemonY,
+                      opponent_pokemonX, opponent_pokemonY)
 
