@@ -45,12 +45,6 @@ opponent_pokemonY = 130
 health_color = (0, 255, 0)
 screen_color = (255, 255, 255)
 
-# health bars
-userBarLength = 750
-
-user_health = pg.draw.line(battleBG, health_color, (550, 425), (userBarLength, 425), width=6)
-opponent_health = pg.draw.line(battleBG, health_color, (250, 175), (500, 175), width=6)
-
 # menus and cursors
 menu_og = pg.image.load("otherImages/menubox.PNG")
 cursor = pg.image.load("otherImages/cursor.png")
@@ -72,6 +66,13 @@ cursor_positionY = 200
 
 battle_menu_cursorX = -120
 battle_menu_cursorY = 440
+
+# health bars
+userBarLength = 750
+oppDmg = 284
+
+user_health = pg.draw.line(myBar, health_color, (550, 425), (userBarLength, 425), width=6)
+
 
 # font
 font = pg.font.SysFont('freesansbold.tff', 40)
@@ -221,6 +222,8 @@ def reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
     win.blit(user_atk4, (260, 550))
     win.blit(user_name, (475, 382))
     win.blit(opp_name, (225, 185))
+    pg.draw.line(oppBar, health_color, (140, 86), (285, 86), width=10)
+    pg.draw.line(oppBar, (0, 0, 0), (284, 86), (284 - ((20 - opponent.bars) * 7.2), 86), width=10)
     pg.display.update()
 
 
@@ -253,13 +256,13 @@ if __name__ == '__main__':
     # create pokemon object
     charmander = classes.Pokemon("Charmander", charmander_sprite, charmander_opp, "Fire",
                                  [Ember, Tackle, Bite, Scratch],
-                                 {"ATTACK": 4, "DEFENSE": 2})
+                                 {"ATTACK": 4, "DEFENSE": 2}, 20)
     squirtle = classes.Pokemon("Squirtle", squirtle_sprite, squirtle_opp, "Water",
                                [Bubble, Scratch, Tackle, Bite],
-                               {"ATTACK": 3, "DEFENSE": 3})
+                               {"ATTACK": 3, "DEFENSE": 3}, 20)
     bulbasaur = classes.Pokemon("Bulbasaur", bulbasaur_sprite, bulbasaur_opp, "Grass",
                                 [IvyWhip, Scratch, Tackle, Bite],
-                                {"ATTACK": 2, "DEFENSE": 5})
+                                {"ATTACK": 2, "DEFENSE": 5}, 20)
 
     pokedex = [charmander, squirtle, bulbasaur]
 
