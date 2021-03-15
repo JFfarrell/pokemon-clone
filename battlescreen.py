@@ -67,13 +67,6 @@ cursor_positionY = 200
 battle_menu_cursorX = -120
 battle_menu_cursorY = 440
 
-# health bars
-userBarLength = 750
-oppDmg = 284
-
-user_health = pg.draw.line(myBar, health_color, (550, 425), (userBarLength, 425), width=6)
-
-
 # font
 font = pg.font.SysFont('freesansbold.tff', 40)
 
@@ -123,17 +116,17 @@ def calculate_damage(move, attacked_pokemon):
                 # both types the same
                 if attacked_pokemon.type == k:
                     print("\nIts not very effective...")
-                    return 0.85
+                    return 0.80
 
-                # attacked pokemon is strong
+                # attacked pokemon is strongaaa  aaa
                 if attacked_pokemon.type == version[(i+1) % 3]:
                     print("\nIt's not very effective...")
-                    return 0.75
+                    return 0.5
 
                 # attack is strong against attacked pokemon
                 if attacked_pokemon.type == version[(i+2) % 3]:
                     print("\nIt's super effective!")
-                    return 1.25
+                    return 1.5
     else:
         return 1
 
@@ -222,7 +215,9 @@ def reframe(user_pokemon_sprite, opponent_pokemon_sprite, x1, y1, x2, y2):
     win.blit(user_atk4, (260, 550))
     win.blit(user_name, (475, 382))
     win.blit(opp_name, (225, 185))
+    pg.draw.line(myBar, health_color, (181, 75), (361, 75), width=10)
     pg.draw.line(oppBar, health_color, (140, 86), (285, 86), width=10)
+    pg.draw.line(myBar, (0, 0, 0), (361-((20 - user.bars) * 9), 75), (361, 75), width=10)
     pg.draw.line(oppBar, (0, 0, 0), (284, 86), (284 - ((20 - opponent.bars) * 7.2), 86), width=10)
     pg.display.update()
 
@@ -256,13 +251,13 @@ if __name__ == '__main__':
     # create pokemon object
     charmander = classes.Pokemon("Charmander", charmander_sprite, charmander_opp, "Fire",
                                  [Ember, Tackle, Bite, Scratch],
-                                 {"ATTACK": 4, "DEFENSE": 2}, 20)
+                                 {"ATTACK": 4, "DEFENSE": 2})
     squirtle = classes.Pokemon("Squirtle", squirtle_sprite, squirtle_opp, "Water",
                                [Bubble, Scratch, Tackle, Bite],
-                               {"ATTACK": 3, "DEFENSE": 3}, 20)
+                               {"ATTACK": 3, "DEFENSE": 3})
     bulbasaur = classes.Pokemon("Bulbasaur", bulbasaur_sprite, bulbasaur_opp, "Grass",
                                 [IvyWhip, Scratch, Tackle, Bite],
-                                {"ATTACK": 2, "DEFENSE": 5}, 20)
+                                {"ATTACK": 2, "DEFENSE": 4})
 
     pokedex = [charmander, squirtle, bulbasaur]
 

@@ -1,5 +1,5 @@
 class Pokemon:
-    def __init__(self, name, sprite, oppSprite, type, moves, EVs, healthBar, health="================"):
+    def __init__(self, name, sprite, oppSprite, type, moves, EVs, health="================"):
         # save variables as attributes
         self.name = name
         self.sprite = sprite
@@ -8,7 +8,6 @@ class Pokemon:
         self.moves = moves
         self.attack = EVs['ATTACK']
         self.defense = EVs['DEFENSE']
-        self.healthBar = healthBar
         self.health = health
         # health bars
         self.bars = 20
